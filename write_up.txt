@@ -1,0 +1,51 @@
+Ken Allen
+
+Edge detection write up
+
+Relevant files:
+GaussiaFilter.py
+Edge_detection.py
+Pictures
+
+Image is loaded on line 21 of Edge_detection.py
+
+
+Feel free to use your own picture. Only .png types seem to work though. Pictures with really sharp edges like the one with Sidney Crosby looks really cool. 
+
+
+I was trying to find the edges of an image. The output is another image that shows that edges of the original image. My code does seem to return the output that I expected.
+
+The algorithm I used, at least partially implemented is called Canny Edge detection. The following YouTube videos explained blur and using the Sobel operator to me. 
+
+https://www.youtube.com/watch?v=uihBwtPIBxM : Sobel operator
+https://www.youtube.com/watch?v=C_zFhWdM4ic&feature=youtu.be : blur
+
+I started the project by playing around with blur. I tried a few different kernels such as an averaging kernel (an n x n matrix where every value is one) and a Gaussian kernel where the middle value is the largest and they decrease going outwards following a Gaussian curve. To implement the blurring I used the Gaussian kernel to average all the cells of a given color around the cell that I’m editing on the new matrix. That smoothed out the matrix. Apparently Gaussian blur preserved edges better than averaging. 
+
+Then I converted the image to grayscale by adding rgb pixels together as such:
+r0.299+g0.587 + b*0.114. I found online that this works better than an average. 
+
+The next part was using the Sobel operators to detect edges. I created a new matrix where I pit the calculated gradients. This was the final output. It showed the edges. 
+
+Loops vs Vectors:
+
+I first implemented the whole program using loops since that is more familiar to me. The program original_funcs.py shows the original function (it isn’t imported to the program anymore). The program ran really slowly. I mostly ran tests with the Pittsburgh Penguins logo since it was so small and ran in a few seconds. The larger images to a while to run. I converted all of my function to vector methods and now the larger photos run in a few seconds. 
+
+run of program with loops vs with vector techniques.
+
+with double loops (grayscale vectorized)
+rainier.png : 142.35 sec (120 sec with sobel vectorized)
+hood.png  : 41.79 (21.35 sec with sobel vectorized)
+penguins.png: 3.75 (2.9 sec with sobel vectorized)
+
+all vectorized
+rainier.png : 1.18 sec
+hood.png  : .244
+penguins.png: 0.0163
+
+
+The code did work as I expected. I found that the output looks kind of cool. I included some pictures of what the output looks like. I was thinking that simplifying an image to its edges could make image detection easier. My original plan was to detect mountains by comparing the shape of the mountain, such as average gradient of the slopes, jaggedness … based on an image to data that I found at a website called http://terrain.party/ (downloadable elevation data). The plan would be do get the shape of a mountain from different angles based their data and see the shape from one angle looks like my picture. 
+
+I used the same techniques for isolating the r,g and b pixels of an image that we used in the k-means clustering problem. I also copied values for the 5x5 Gaussian matrix. I implemented a program that finds the matrix based on a Gaussian distribution but since I used the same on every time I thought I might was well hardcode one from the internet. 
+
+Have a nice break!
